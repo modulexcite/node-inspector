@@ -1,19 +1,5 @@
 #!/usr/bin/env node
 
-if (process.env.SystemDrive) { // we are running on Windows
-  // This is a "nuclear option" workaround for a node Windows issue https://github.com/joyent/node/issues/1697
-  // An intermittent assert in net_uv is causing the process to go down which reduces
-  // the reliability of the end to end debugging experience. This problem manifests itself
-  // frequently with xhr-polling transport. The bug is expected to be fixed in v0.6.0 of node.
-
-  process.on('uncaughtException', function (err) {
-    console.log('Unandled exception cought: ' + err);
-    console.log(err.stack);
-    console.stdout.flush();
-    console.stderr.flush();
-  });
-}
-
 var DebugServer = require('../lib/debug-server').DebugServer,
     fs = require('fs'),
     path = require('path'),
